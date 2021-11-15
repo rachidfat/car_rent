@@ -1,0 +1,30 @@
+{# ICI EXTENDS VEUT DIRE HERITE DE LA PAGE BASE.HTML.TWIG #}
+{% extends 'base.html.twig'%} 
+{% block title %}S'inscrire{% endblock %}
+{% block body %}
+    <div class="contact">
+		<div class="contact_background" style="background-image:url({{ asset("assets/images/contact.png)")}}"></div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-5">
+					<div class="contact_image">
+						
+					</div>
+				</div>
+				<div class="col-lg-7">
+					<div class="contact_form_container">
+						<div class="contact_title">Créer un compte</div>
+						{% if warning_pwd is defined %}
+							<div class="alert alert-warning" role="alert">
+								Votre mot de passe doit contenir min 12 cacarters <a href="#" class="alert-link">et max 32</a>.Veuillez recommencer.
+							</div>
+						{% endif %}
+						{{ form_start(formRegister) }}
+						{{ form_end(formRegister) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

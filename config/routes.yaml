@@ -1,0 +1,11 @@
+landing:
+  path: /
+  controller: App\Controller\LandingController::landingPage
+
+register:
+  path: /register
+  controller: App\Controller\RegisterController::signUp
+  
+login:
+  path: /login
+  controller: App\Controller\LoginController::login
