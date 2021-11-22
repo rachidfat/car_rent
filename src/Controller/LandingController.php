@@ -3,8 +3,9 @@
 
     namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Session\Session;
     use Twig\Environment; // a rajouter dans chaque controlleur
 
     class LandingController extends AbstractController
@@ -20,7 +21,20 @@ use Symfony\Component\HttpFoundation\Response;
         }                     // a toujours avoir dans chaque controlleur
         public function landingPage()
         {
+
             return new Response($this->page->render('Landing/landing.html.twig'));
             // return new Response("Hello WORLD !");
+        }
+
+        public function deconnectionUser()
+        {
+            // Je ferme la session
+            // $id = $this->get('session')->get('id');
+            // echo
+            $durableSession = new Session();
+            $durableSession->start();
+            $durableSession->clear();
+
+            return new Response($this->page->render('Landing/landing.html.twig'));
         }
     }

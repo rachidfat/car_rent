@@ -34,7 +34,6 @@ class Modele{
                 // Je prépare ma requete
                 $queryString = "INSERT INTO users (name, surname, phone, mail, address, cp, password) VALUES (:name, :surname, :phone, :mail, :address, :cp, :password)";
                 $queryPrepared = $connection->prepare($queryString, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-
                 $args = array(
                     "name" => $userData['name'],
                     "surname" => $userData['surname'],
@@ -54,8 +53,26 @@ class Modele{
                 return 0;
             }
             return FALSE;
-
             
+        }
+
+        public function loginUser($login, $pwd){
+            // J'ouvre une connexion vers ma base de données...
+            $connection = $this->connectToDb();
+            // Je vérifie si ma connexion est bonne..
+            if($connection != FALSE){
+                // Alors
+                $queryString = "SELECT * FROM users WHERE mail = :login AND password = :pwd";
+                $queryPrepared = $connection->prepare($queryString, array(PDO::ATTR_CURSOR =>PDO::CURSOR_FWDONLY));
+                $queryPrepared->execute(array("login"=>$login, "pwd"=>$pwd));
+
+                $resultSet = $queryPrepared->fetch();
+                return $resultSet;
+            }
+
+            echo "$===============> ECHEC CONNEXION !";
+            return FALSE;
+
         }
 
         // TODO: Le reste

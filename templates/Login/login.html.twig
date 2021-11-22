@@ -4,7 +4,6 @@
 {% block body %}
     <div class="contact">
 		<div class="contact_background" style="background-image:url({{ asset("assets/images/samuele-errico-piccarini-MyjVReZ5GLQ-unsplash.jpg )")}}"></div>
-
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-5">
@@ -15,19 +14,38 @@
 				<div class="col-lg-7">
 					<div class="contact_form_container">
 						<div class="contact_title">Se connecter à mon compte</div>
+						<br>
 						{% if new_user is defined %}
-							<div class="alert alert-success" role="alert">
-								Votre compte a bien été crée votre logine est: <a href="#" class="alert-link">{{login}}</a>
+							<div id="success-account-created" class="alert alert-success" role="alert">
+								Votre compte a bien été crée votre login est: <a href="#" class="alert-link">{{login}}</a>
 							</div>
 						{% endif %}
-						<form action="#" id="contact_form" class="contact_form">
-                            <input type="email" id="contact_form_subject" class="contact_form_subject input_field" placeholder="Email" required="required" data-error="Subject is required.">
-                            <input type="password" id="contact_form_subject" class="contact_form_subject input_field" placeholder="Mot de passe" required="required" data-error="Subject is required.">
-							<button type="submit" id="form_submit_button" class="form_submit_button button">Se connecter<span></span><span></span><span></span></button>
-						</form>
+						{# If connection error raised #}
+						{% if connection_error is defined %}
+							<div id="danger-error-connection" class="alert alert-danger" role="alert">
+								Votre login et ou le mot de passe est inccorect <a href="#" class="alert-link">Veuillez recommencer !</a>
+							</div>
+						{% endif %}
+
+						{# {{ form_start(formLogin)}}
+							{{form_row(formLogin.login)}}
+							{{form_row(formLogin.pwd)}}
+							{{form_row(formLogin.valider)}}
+						{{ form_end(formLogin) }} #}
+						{{ form(formLogin) }}
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			// danger-error-connection
+			setTimeout(function(){	
+				$("#danger-error-connection").fadeOut();
+				$("#success-account-created").fadeOut();							
+			}, 5000);
+		});	
+	</script>
 {% endblock %}

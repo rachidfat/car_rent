@@ -43,10 +43,16 @@
                                     <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                                 </ul>
                             </div>
+                            
                             <div class="user_box ml-auto">
-                                <div class="user_box_login user_box_link"><a href="/">Home</a></div>
-                                <div class="user_box_login user_box_link"><a href="/login">Se connecter</a></div>
-                                <div class="user_box_register user_box_link"><a href="/register">S'inscrire</a></div>
+                                {% if app.session.get('id') == NULL %}
+                                    <div class="user_box_login user_box_link"><a href="/">Home</a></div>
+                                    <div class="user_box_login user_box_link"><a href="/login">Se connecter</a></div>
+                                    <div class="user_box_register user_box_link"><a href="/register">S'inscrire</a></div>
+                                {% else %}
+                                    <div class="user_box_login user_box_link"><a href="/">Bonjour <b>{{app.session.get('name') ~' '~ app.session.get('surname')}}</b> Content de vous revoir !</a></div> 
+                                    <div class="user_box_register user_box_link"><a href="/deconnection">Déconnexion</a></div>  
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -109,6 +115,7 @@
             {# ICI TU DOIS RAJOUTER LE CONTENU QUI CHANGE !! #}
         {% endblock %}
         {# ---------------------- JS ---------------------- #}
+        
         <script src="{{ asset("assets/js/jquery-3.2.1.min.js")}}"></script>
         <script src="{{ asset("assets/styles/bootstrap4/popper.js")}}"></script>
         <script src="{{ asset("assets/styles/bootstrap4/bootstrap.min.js")}}"></script>

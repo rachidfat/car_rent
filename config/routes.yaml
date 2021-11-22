@@ -9,3 +9,11 @@ register:
 login:
   path: /login
   controller: App\Controller\LoginController::login
+
+deconnection:
+  path: /deconnection
+  controller: App\Controller\LandingController::deconnectionUser
+
+profil:
+  path: /profil/{username}
+  controller: App\Controller\ProfilController::redirectToProfilPage
