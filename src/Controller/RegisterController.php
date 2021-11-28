@@ -63,9 +63,10 @@
                     $modele = new Modele();
                     $queryResult = $modele->addUser($userData);
                     if($queryResult == 1){
-                        return new Response($this->page->render('Login/login.html.twig', array('new_user'=>True, 'login'=>$userData['mail'])));
+                        return $this->redirect('/login');
+                        // return new Response($this->page->render('Login/login.html.twig', array('new_user'=>True, 'login'=>$userData['mail'])));
                     }
-                    return new Response($queryResult);
+                    return new Response($this->page->render('Register/register.html.twig', array('formRegister'=>$formRegister->createView())));
                 }
                 else{
                     // Sinon

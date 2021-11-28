@@ -46,13 +46,8 @@ class Modele{
                     "city" => $userData['city'],
                     "password" => $userData['password']
                 );
-                var_dump($args);
-                try{
-                    $resultSet = $queryPrepared->execute($args);
-                    echo "je suis la";
-                }catch(Exception $e){
-                    echo $e->getMessage();
-                }
+                $resultSet = $queryPrepared->execute($args);
+               
                 // J'ai bien add l'user
                 if($resultSet){
                     return 1;
