@@ -10,7 +10,6 @@
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
     use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
     use Twig\Environment; // a rajouter dans chaque controlleur
@@ -39,6 +38,7 @@
             ->add('phone', TextType::class, array('label' => ' ', 'attr' => array('class' =>'contact_form_subject input_field', 'placeholder'=> 'Tél')))
             ->add('address', TextType::class, array('label' => ' ', 'attr' => array('class' =>'contact_form_subject input_field', 'placeholder'=> 'Adresse')))
             ->add('cp', TextType::class, array('label' => ' ', 'attr' => array('class' =>'contact_form_subject input_field', 'placeholder'=> 'Code postal')))
+            ->add('city', TextType::class, array('label' => ' ', 'attr' => array('class' =>'contact_form_subject input_field', 'placeholder'=> 'Ville')))
             ->add('password', PasswordType::class, array('label' => ' ', 'attr' => array('class' =>'contact_form_subject input_field', 'placeholder'=> 'Mot de passe')))
             ->add('valider', SubmitType::class, array('label' => 'Je crée mon compte !','attr' => array('class' => 'form_submit_button button')))
             ->getForm();
@@ -65,7 +65,7 @@
                     if($queryResult == 1){
                         return new Response($this->page->render('Login/login.html.twig', array('new_user'=>True, 'login'=>$userData['mail'])));
                     }
-                    return new Response('Le formulaire a été envoyé avec succès !');
+                    return new Response($queryResult);
                 }
                 else{
                     // Sinon

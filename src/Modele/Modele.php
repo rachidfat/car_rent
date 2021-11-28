@@ -2,7 +2,9 @@
 
 
     namespace App\Modele;
-    use \PDO;
+
+use Exception;
+use \PDO;
 use PDOException;
 
 class Modele{
@@ -17,7 +19,7 @@ class Modele{
 
         // Ici il faut que je crée la connexion vers ma bdd (Ouvrir la connexion)
 
-        private function connectToDb(){
+        public function connectToDb(){
             try{
                 return new \PDO($this->DRIVER, $this->USER, $this->PWD, $this->OPTIONS);
             }catch(PDOException $Exception){
@@ -32,7 +34,7 @@ class Modele{
             // Si c'est le cas alors
             if($connection != FALSE){
                 // Je prépare ma requete
-                $queryString = "INSERT INTO users (name, surname, phone, mail, address, cp, password) VALUES (:name, :surname, :phone, :mail, :address, :cp, :password)";
+                $queryString = "INSERT INTO users (name, surname, phone, mail, address, cp, city, password) VALUES (:name, :surname, :phone, :mail, :address, :cp, :city, :password)";
                 $queryPrepared = $connection->prepare($queryString, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
                 $args = array(
                     "name" => $userData['name'],
@@ -41,10 +43,16 @@ class Modele{
                     "mail" => $userData['mail'],
                     "address" => $userData['address'],
                     "cp" => $userData['cp'],
+                    "city" => $userData['city'],
                     "password" => $userData['password']
                 );
-                
-                $resultSet = $queryPrepared->execute($args);
+                var_dump($args);
+                try{
+                    $resultSet = $queryPrepared->execute($args);
+                    echo "je suis la";
+                }catch(Exception $e){
+                    echo $e->getMessage();
+                }
                 // J'ai bien add l'user
                 if($resultSet){
                     return 1;
