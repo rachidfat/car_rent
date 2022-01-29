@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+{%  block title %}RESULT SEARCH FOR {{city}}{% endblock %}
+
+{% set resultSearch = 'yes' %}
+{% block body %}
+
+	<div class="offers">
+
+		<!-- Search -->
+
+		<div class="search">
+			<div class="search_inner">
+
+				<!-- Search Contents -->
+				
+				<div class="container fill_height no-padding">
+					<div class="row fill_height no-margin">
+						<div class="col fill_height no-padding">
+
+							<!-- Search Tabs -->
+
+							<div class="search_tabs_container">
+								<div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+									<div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><span><a style="color:#333" href="/consultPost/{{app.session.get('name')|lower}}">Consulter mes annonces</a></div>
+                                    <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><a style="color:#333" href="/newPost/{{app.session.get('name')|lower}}">Poster <br>une annonce</a></div>
+                                    <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><a style="color:#333" href="/mycars/{{app.session.get('name')|lower}}">Mes véhicules</a></div>
+                                    <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><a style="color:#333" href="/accountSettings/{{app.session.get('name')|lower}}">Paramètres du compte</a></div>
+								</div>		
+							</div>
+
+							<!-- Search Panel -->
+
+							<div class="search_panel active">
+								<form action="/search" method="GET" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+									<div class="search_item">
+                                        <div>Lieu</div>
+                                        <input type="text" name="city" class="destination search_input" required="required" placeholder="Saisissez une adresse, une ville">
+                                    </div>
+                                    <div class="search_item">
+                                        <div>Début location</div>
+                                        <input id="dateStartPicker" type="date" name="startDate" class="check_in search_input" placeholder="JJ/MM/YYYY">
+                                    </div>
+                                    <div class="search_item">
+                                        <div>Fin location</div>
+                                        <input id="dateEndPicker" type="date" name="endDate" class="check_out search_input" placeholder="JJ/MM/YYYY">
+                                    </div>
+                                    <div class="search_item">
+                                        <div>KM</div>
+                                        <select name="Km" id="km" class="dropdown_item_select search_input">
+                                            {% for i in 1..100 %}
+                                                <option value="{{ i * 20}}">{{ i * 20}} Km</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+									<button type="submit" class="button search_button">Rechercher<span></span><span></span><span></span></button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>	
+		</div>
+
+		<!-- Offers -->
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-1 temp_col"></div>
+				<div class="col-lg-11">
+					
+					<!-- Offers Sorting -->
+					<div class="offers_sorting_container">
+						<ul class="offers_sorting">
+							<li>
+								<span class="sorting_text">Prix</span>
+								<i class="fa fa-chevron-down"></i>
+								<ul>
+									<li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }' data-parent=".price_sorting"><span>Décroissant</span></li>
+									<li class="sort_btn" data-isotope-option='{ "sortBy": "price" }' data-parent=".price_sorting"><span>Croissant</span></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<!-- Offers Grid -->
+
+					<div class="offers_grid">
+
+						<!-- Offers Item -->
+						{% for post in result %}
+						<div class="offers_item rating_4">
+							<div class="row">
+								<div class="col-lg-1 temp_col"></div>
+								<div class="col-lg-3 col-1680-4">
+									<div class="offers_image_container">
+										
+										{% set urlImg = "assets/images/"~ app.session.get('id') ~"_"~ post['modele'] ~"_"~ post['counter_km'] ~ ".jpg" %}
+										<div class="offers_image_background" style="background-image:url({{asset(urlImg)}})"></div>
+										<div class="offer_name"><a href="#">{{post['marque']}} {{post['modele']}}</a></div>
+									</div>
+								</div>
+								<div class="col-lg-8">
+									<div class="offers_content">
+										<div class="offers_price">{{post['price_per_day']}}€<span>/jour</span></div>
+										<div class="rating_r rating_r_4 offers_rating" data-rating="4">
+											{% for i in range(1,random(3,5)) %}
+												<i></i>
+											{% endfor %}
+										</div>
+										<p class="offers_text" style="text-align:justify">{{post['descCar'][0:100]}}... <a style="text-decoration:none;font-size:12px;" href="/book/{{post['id_announcement']}}">Afficher plus</a></p>
+										
+										<div class="button book_button"><a href="/book/{{post['id_announcement']}}">Je réserve !<span></span><span></span><span></span></a></div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+
+			</div>
+		</div>		
+	</div>
+{% endblock %}

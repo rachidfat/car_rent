@@ -1,0 +1,182 @@
+{% extends 'base.html.twig' %}
+{%  block title %}consult Post{% endblock %}
+
+{% set resultSearch = 'yes' %}
+
+{% block body %}
+
+	<!-- Offers -->
+
+	<div class="offers">
+
+		<!-- Search -->
+		<div class="search">
+			<div class="search_inner">
+
+				<!-- Search Contents -->
+				
+				<div class="container fill_height no-padding">
+					<div class="row fill_height no-margin">
+						<div class="col fill_height no-padding">
+
+							<!-- Search Tabs -->
+
+							<div class="search_tabs_container">
+								<div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+									<div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><span><a style="color:#333" href="/consultPost/{{app.session.get('name')|lower}}">Consulter mes annonces</a></div>
+                                    <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><a style="color:#333" href="/newPost/{{app.session.get('name')|lower}}">Poster <br>une annonce</a></div>
+                                    <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><a style="color:#333" href="/mycars/{{app.session.get('name')|lower}}">Mes véhicules</a></div>
+                                    <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><a style="color:#333" href="/accountSettings/{{app.session.get('name')|lower}}">Paramètres du compte</a></div>
+								</div>		
+							</div>
+
+							<!-- Search Panel -->
+
+							<div class="search_panel active">
+								<form action="/search" method="GET" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+									<div class="search_item">
+                                        <div>Lieu</div>
+                                        <input type="text" name="city" class="destination search_input" required="required" placeholder="Saisissez une adresse, une ville">
+                                    </div>
+                                    <div class="search_item">
+                                        <div>Début location</div>
+                                        <input id="dateStartPicker" type="date" name="startDate" class="check_in search_input" placeholder="JJ/MM/YYYY">
+                                    </div>
+                                    <div class="search_item">
+                                        <div>Fin location</div>
+                                        <input id="dateEndPicker" type="date" name="endDate" class="check_out search_input" placeholder="JJ/MM/YYYY">
+                                    </div>
+                                    <div class="search_item">
+                                        <div>KM</div>
+                                        <select name="Km" id="km" class="dropdown_item_select search_input">
+                                            {% for i in 1..100 %}
+                                                <option value="{{ i * 20}}">{{ i * 20}} Km</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+									<button type="submit" class="button search_button">Rechercher<span></span><span></span><span></span></button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>	
+		</div>
+
+		<!-- Offers -->
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-1 temp_col"></div>
+				<div class="col-lg-11">
+					
+					<!-- Offers Sorting -->
+					<div class="offers_sorting_container">
+						<ul class="offers_sorting">
+							<li>
+								<span class="sorting_text">Prix</span>
+								<i class="fa fa-chevron-down"></i>
+								<ul>
+									<li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }' data-parent=".price_sorting"><span>Décroissant</span></li>
+									<li class="sort_btn" data-isotope-option='{ "sortBy": "price" }' data-parent=".price_sorting"><span>Croissant</span></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<!-- Offers Grid -->
+
+					<div class="offers_grid">
+
+						<!-- Offers Item -->
+						{% for post in getPost %}
+						<div class="offers_item rating_4">
+							<div class="row">
+								<div class="col-lg-1 temp_col"></div>
+								<div class="col-lg-3 col-1680-4">
+									<div class="offers_image_container">
+										{% set urlImg = "assets/images/"~ app.session.get('id') ~"_"~ post['modele'] ~"_"~ post['counter_km'] ~ ".jpg" %}
+										<div class="offers_image_background" style="background-image:url({{asset(urlImg)}})"></div>
+										<div class="offer_name"><a href="#">{{post['marque']}} {{post['modele']}}</a></div>
+									</div>
+								</div>
+								<div class="col-lg-8">
+									<div class="offers_content">
+										<div class="offers_price">{{post['price_per_day']}}€<span>/jour</span></div>
+										<div class="rating_r rating_r_4 offers_rating" data-rating="4">
+											{% for i in range(1,random(3,5)) %}
+												<i></i>
+											{% endfor %}
+										</div>
+										<p class="offers_text" style="text-align:justify">{{post['descCar'][0:500]}}</p>
+										
+										<div class="button book_button"><a class = "update_price_btn" href="#{{post['id_announcement']}}">Modifier le prix<span></span><span></span><span></span></a></div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+
+			</div>
+		</div>		
+	</div>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="contact_form_container">
+                                <div id='titleInforme' class="contact_title">Confirmer le nouveau prix</div>
+                                <form id="updatePriceForm" action="/mycars/updatePrice/{{app.session.get('name')|lower}}" id="contact_form" class="contact_form" method="POST">
+                                    <input type="number" name="newPrice" id="newPrice" class="destination search_input" style="border:1px solid #350A4E;" required placeholder="Nouveau prix">
+                                    <input type="hidden" name="idAnnouncement" id="id_announcement">
+                                    {# <button type="submit" id="form_submit_button" class="form_submit_button button">Valider<span></span><span></span><span></span></button> #}
+									<div class="button book_button"><a href="#" id="validatePrice" >Modifier le prix<span></span><span></span><span></span></a></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".update_price_btn").on('click', function(){
+                window.setTimeout(function(){
+                    var id_announcement = $(location).attr('href').split('#')[1];
+                    $('#id_announcement').val(id_announcement);
+				    $('#exampleModalCenter').modal('toggle');
+			    }, 600);
+			});
+
+			$("#validatePrice").on('click', function(){
+				if($("#newPrice").val() == ''){
+					$("#titleInforme").css("color","red");
+					$("#titleInforme").css("font-weight","bold");
+					$("#titleInforme").text("Veuillez saisir une valeur");
+				}else{
+					$("#updatePriceForm").submit();
+				}
+				
+			});
+		});
+	</script>
+{% endblock %}

@@ -20,19 +20,14 @@
 								Votre compte a bien été crée
 							</div>
 						{% endif %}
-						{# If connection error raised #}
+
 						{% if connection_error is defined %}
 							<div id="danger-error-connection" class="alert alert-danger" role="alert">
 								Votre login et ou le mot de passe est inccorect <a href="#" class="alert-link">Veuillez recommencer !</a>
 							</div>
 						{% endif %}
-
-						{# {{ form_start(formLogin)}}
-							{{form_row(formLogin.login)}}
-							{{form_row(formLogin.pwd)}}
-							{{form_row(formLogin.valider)}}
-						{{ form_end(formLogin) }} #}
 						{{ form(formLogin) }}
+						<button class="form_submit_button button"><a href="/register">je n'ai pas encore de compte</a></button>
 					</div>
 				</div>
 			</div>

@@ -3,7 +3,8 @@
 
     namespace App\Controller;
 
-    use App\Modele\Modele;
+use App\Lib\RequiermentsApp;
+use App\Modele\Modele;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -47,16 +48,20 @@
                 $modele = new Modele();
                 $user = $modele->loginUser($credentials['login'], $credentials['pwd']);
                 if(!empty($user)){
+
+                    $helper = new RequiermentsApp();
                     // echo "Connexion avec succes";
                     $durableSession = new Session();
-                    $durableSession->set('id', $user['id_user']);
+                    $durableSession->set('id', $user['id']);
                     $durableSession->set('name', $user['name']);
                     $durableSession->set('surname', $user['surname']);
                     $durableSession->set('phone', $user['phone']);
                     $durableSession->set('mail', $user['mail']);
                     $durableSession->set('address', $user['address']);
+                    $durableSession->set('city', $user['city']);
                     $durableSession->set('cp', $user['cp']);
-                    $durableSession->set('last_connection', $user['last_connection']);
+                    $durableSession->set('pwd', $user['password']);
+                    $durableSession->set('last_connection', $helper->dateFormat($user['last_connection'], "FR"));
 
                     // return new Response($this->page->render('Profil/profil.html.twig'));
                     return $this->redirect('/profil/'.strtolower($durableSession->get('name')));

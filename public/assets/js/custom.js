@@ -318,7 +318,7 @@ $(document).ready(function()
 
 			testSlider.owlCarousel(
 			{
-				loop:true,
+				loop:false, // old true
 				nav:false,
 				dots:false,
 				smartSpeed:1200,

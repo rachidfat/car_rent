@@ -1,0 +1,26 @@
+<div class="search_panel active">
+    <form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+        <div class="search_item">
+            <div>Lieu</div>
+            <input type="text" class="destination search_input" required="required" placeholder="Saisissez une adresse, une ville">
+        </div>
+        <div class="search_item">
+            <div>Début location</div>
+            <input type="date" class="check_in search_input" placeholder="JJ/MM/YYYY">
+        </div>
+        <div class="search_item">
+            <div>Fin location</div>
+            <input type="date" class="check_out search_input" placeholder="JJ/MM/YYYY">
+        </div>
+        <div class="search_item">
+            <div>KM</div>
+            <select name="adults" id="adults_1" class="dropdown_item_select search_input">
+                {% for i in 1..50 %}
+                    <option>{{ i * 20}} Km</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button class="button search_button">Rechercher<span></span><span></span><span></span></button>
+    </form>
+</div>

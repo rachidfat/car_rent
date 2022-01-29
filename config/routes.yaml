@@ -14,6 +14,57 @@ deconnection:
   path: /deconnection
   controller: App\Controller\LandingController::deconnectionUser
 
+update_password:
+  path: /updatePassword/{username}
+  controller: App\Controller\AccountSettingsController::changePwd
+
 profil:
   path: /profil/{username}
   controller: App\Controller\ProfilController::redirectToProfilPage
+
+addPost:
+  path: /newPost/{usenrame}
+  controller: App\Controller\PostController::newPost
+
+validatedNewPost:
+  path: /newPost/add/{usenrame}
+  controller: App\Controller\PostController::validatedNewPost
+
+consultPost:
+  path: /consultPost/{username}
+  controller: App\Controller\PostController::consultPost
+
+my_cars:
+  path: /mycars/{username}
+  controller: App\Controller\CarsController::carsPage
+
+my_new_cars:
+  path: /newCar/add/{username}
+  controller: App\Controller\CarsController::addNewcar
+
+account_settings:
+  path: /accountSettings/{username}
+  controller: App\Controller\AccountSettingsController::editAccount
+
+search:
+  path: /search
+  controller: App\Controller\ProfilController::searchPage
+
+book:
+  path: /book/{id_announcement}
+  controller: App\Controller\BookController::bookPage
+
+bookValid:
+  path: /book/valid/{id_announcement}
+  controller: App\Controller\BookController::bookValidPage
+
+
+removeCar:
+  path: /mycars/removeCar/{username}
+  controller: App\Controller\CarsController::removeCar
+
+
+updatePrice:
+  path: /mycars/updatePrice/{username}
+  controller: App\Controller\PostController::updatePrice
+
