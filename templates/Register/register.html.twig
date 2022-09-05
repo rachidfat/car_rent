@@ -1,4 +1,4 @@
-{# ICI EXTENDS VEUT DIRE HERITE DE LA PAGE BASE.HTML.TWIG #}
+{# HERITE DE LA PAGE BASE.HTML.TWIG #}
 {% extends 'base.html.twig'%} 
 {% block title %}S'inscrire{% endblock %}
 {% block body %}
@@ -9,7 +9,7 @@
 			<div class="row">
 				<div class="col-lg-5">
 					<div class="contact_image">
-						
+		
 					</div>
 				</div>
 				<div class="col-lg-7">
@@ -17,7 +17,7 @@
 						<div class="contact_title">Créer un compte</div>
 						{% if warning_pwd is defined %}
 							<div class="alert alert-warning" role="alert">
-								Votre mot de passe doit contenir min 12 cacarters <a href="#" class="alert-link">et max 32</a>.Veuillez recommencer.
+								Votre mot de passe doit contenir min 12 caractères <a href="#" class="alert-link">et max 32</a>.Veuillez recommencer.
 							</div>
 						{% endif %}
 						{{ form_start(formRegister) }}
@@ -28,3 +28,4 @@
 		</div>
 	</div>
 {% endblock %}
+

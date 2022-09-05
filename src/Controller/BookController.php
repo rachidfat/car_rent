@@ -8,19 +8,19 @@
     use Symfony\Component\HttpFoundation\Session\Session;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Twig\Environment; // a rajouter dans chaque controlleur
+    use Twig\Environment;
 
     class BookController extends AbstractController
     {
         /**
-         * @var Environment  // pour cela on rajoute ces lignes la afin de dire ''j'ai le droit d'implementer de nouvelles fonctions !!
+         * @var Environment
          */
         private $page;
         public function __construct(Environment $page){
 
             $this->page = $page;
 
-        }                     // a toujours avoir dans chaque controlleur
+        }
 
         public function bookPage($id_announcement){
             $durableSession = new Session();
@@ -34,11 +34,9 @@
                 $comments = $modele->getComments($post['id_car']);
                 return new Response($this->page->render('Book/book.html.twig', array('post'=>$post, 'comments'=>$comments)));
             }else{
-                // une erreur de connexion...
                 echo "<h1>401 (Unauthorized) Please login !</h1>";
                 return new Response();
             }
-
         }
 
         public function bookValidPage($id_announcement){
@@ -60,7 +58,6 @@
                 }
                 return $this->redirect('/book/'.$id_announcement);
             }else{
-                // une erreur de connexion...
                 echo "<h1>401 (Unauthorized) Please login !</h1>";
                 return new Response();
             }

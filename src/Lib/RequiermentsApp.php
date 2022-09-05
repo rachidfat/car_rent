@@ -7,11 +7,7 @@
         {   
         }
 
-        /**
-         * Cette fonction retourne True si la taille du mot de passe est entre 12 et 32 caractéres
-         * False le cas échéant !
-         */
-        public function checkPasswordSize($pwd)
+        public function checkPasswordSize($pwd)    // verifie si le mot de passe a entre 12 et 32 caractéres
         {
             if((strlen($pwd) > 11) && (strlen($pwd) < 33)){
                 return True;
@@ -19,7 +15,7 @@
             return False;
         }
 
-        public function dateFormat($dateTime, $culture){
+        public function dateFormat($dateTime, $culture){    // retourne la date au format FR
             if(mb_strtoupper($culture) == "FR"){
 
                 list($date, $time) = explode(" ", $dateTime) ;
@@ -28,17 +24,12 @@
 
                 return $date;
             }
-            //else si la culture c'est EN
-            // TODO:
-            
             return $dateTime;
-
         }
 
-        public function dateDiff($startDate,$endDate){
+        public function dateDiff($startDate,$endDate){    // retourne la difference entre 2 dates
 
-            // Here to calculate DateDiffe
-            $endDateTime = strtotime($endDate); // or your date as well
+            $endDateTime = strtotime($endDate);
             $startDateTime = strtotime($startDate);
 
             $dateDiff = $endDateTime - $startDateTime;
@@ -50,7 +41,7 @@
             return $days;
         }
 
-        public function applyPrice($startDate,$endDate, $pricePerDay){
+        public function applyPrice($startDate,$endDate, $pricePerDay){    // calcul le prix total (nbre de jours x prix par jour)
 
             $days = $this->dateDiff($startDate,$endDate);
             

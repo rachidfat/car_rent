@@ -1598,7 +1598,7 @@ section
 	bottom: 0;
 	width: 100%;
 	height: 44.1%;
-	background: rgba(49, 18, 75, 0.8);
+	background: rgba(49, 18, 75, 0.5);
 }
 .test_content
 {
@@ -1613,7 +1613,7 @@ section
 	position: absolute;
 	left: 41px;
 	bottom: calc(100% - 18px);
-	background: #FFFFFF;
+	background: rgb(255, 255, 255, 0.7);
 	padding-left: 20px;
 	padding-right: 21px;
 	padding-top: 9px;

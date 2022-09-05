@@ -1,200 +1,302 @@
 {% extends 'base.html.twig' %}
-{%  block title %}Book{% endblock %}
+{% block title %}
+    Book
+{% endblock %}
 {% block body %}
-<div class="super_container">
-	
-	<div class="offers">
-		<div class="container">
-			<div class="row">
-				<div class="col text-center">
-					<h2 class="section_title">{{post['title']}}</h2>
-				</div>
-			</div>
-			<div class="row offers_items">
-
-				<!-- Offers Item -->
-				<div class="col-lg-12 offers_col">
-					{% if app.session.get('bookValid') is defined and app.session.get('bookValid') == 'OK' %}
-						
-						<div class="alert alert-success" role="alert">
-							<b>La voiture a bien été réservé ! Merci pour votre confiance...</b>
-						</div>
-					{% endif %}
-					{% if app.session.get('bookValid') is defined and app.session.get('bookValid') == 'KO' %}
-						{{ app.session.set('bookValid', '') }}
-						<div class="alert alert-danger" role="alert">
-							<b>Erreur lors de la réservation de la voiture ! Veuillez recommencer...</b>
-						</div>
-					{% endif %}
-					<div class="offers_item">
-						<div class="row">
-							<div class="col-lg-4">
-								<div class="offers_image_container">
-									<!-- Image by https://unsplash.com/@kensuarez -->
-                                    {% set urlImg = "assets/images/" ~ post['modele'] ~ ".jpg" %}
-									<div class="offers_image_background" style="background-image:url({{asset(urlImg)}})"></div>
-									<div class="offer_name"><a href="#">{{post['marque']}} {{post['modele']}}</a></div>
-								</div>
-							</div>
-							<div class="col-lg-8">
-								<div class="offers_content">
-									<div class="offers_price">
-									{{post['totalPrice']}}€<span>Pour {{post['dateDiff']}} jour(s)</span>
-									</div>
-									<div class="rating_r rating_r_4 offers_rating">
-										{% for i in range(1,random(3,5)) %}
-											<i></i>
-										{% endfor %}
-									</div>
-									<h3 style="margin-top:5%; color:#2D2C2C; font-size:20px;font-weight:bold">À propos du véhicule</h3>
-									<p class="offers_text">{{post['descCar']}}</p>
-									<div class="offers_icons">
-										<ul class="offers_icons_list">
-											<li class="offers_icons_item" style="font-weight:bold"><span style="font-weight:bold;color:#F59B27">Carburant: </span>{{post['energy']}}</li>
-											<li class="offers_icons_item" style="font-weight:bold"><span style="font-weight:bold;color:#F59B27">Modéle: </span>{{post['year']}}</li>
-											<li class="offers_icons_item" style="font-weight:bold"><span style="font-weight:bold;color:#F59B27">KM au compteur: </span>{{post['counter_km']}}</li>
-											<li class="offers_icons_item" style="font-weight:bold"><span style="font-weight:bold;color:#F59B27">Posté par: </span>{{post['surname'] ~' '~post['name']}}</li>
-										</ul>
-									</div>
-									<br>
-									{# <div class="offers_link"><a href="offers.html">read more</a></div> #}
-									{% if app.session.get('bookValid') is defined and app.session.get('bookValid') == 'OK' %}
-										<div class="button book_button" style="font-size: 13px;font-weight: 700;color: #fff;text-transform: uppercase;line-height: 53px;padding-left: 46px;padding-right: 46px;background: #333;pointer-events: none;"><a>Déjà réservé par moi même !</a></div>
-									{% else %}
-										<div class="button book_button" style="font-size: 13px;font-weight: 700;color: #fff;text-transform: uppercase;line-height: 53px;padding-left: 46px;padding-right: 46px;background: #31124b;"><a href="#{{post['id_announcement']}}_modal" data-toggle="modal" data-target="#modalConfirmeBooking">Je confirme !<span></span><span></span><span></span></a></div>
-									{% endif %}
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="cta">
-		<!-- Image by https://unsplash.com/@thanni -->
-		<div class="cta_background" style="background-image:url(images/cta.jpg)"></div>
-		
-		<div class="container">
-			<div class="row">
-				<div class="col">
-
-					<!-- CTA Slider -->
-
-					<div class="cta_slider_container">
-						<div class="owl-carousel owl-theme cta_slider">
-
-							<!-- CTA Slider Item -->
-							{% if comments|length > 0 %}
-								{% for comment in comments %}
-								<div class="owl-item cta_item text-center">
-									<div class="cta_title">{{comment['name']}} {{comment['surname']}}</div>
-									<div class="rating_r rating_r_4">
-										{% for st in range(1,comment['stars']) %}
-											<i></i>
-										{% endfor %}
-									</div>
-									<p class="cta_text">{{comment['desc_comment']}}</p>
-									
-								</div>
-								{% endfor %}
-							{% else %}
-								<div class="owl-item cta_item text-center">
-									<div class="cta_title">Pas de commentaire pour le moment... Soyez le premier à en rajouter en la réservant</div>	
-								</div>
-							{% endif %}
-							
-							
-						</div>
-
-						<!-- CTA Slider Nav - Prev -->
-						<div class="cta_slider_nav cta_slider_prev">
-							<svg version="1.1" id="Layer_4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-								width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
-								<defs>
-									<linearGradient id='cta_grad_prev'>
-										<stop offset='0%' stop-color='#fa9e1b'/>
-										<stop offset='100%' stop-color='#8d4fff'/>
-									</linearGradient>
-								</defs>
-								<path class="nav_path" fill="#F3F6F9" d="M19,0H9C4.029,0,0,4.029,0,9v15c0,4.971,4.029,9,9,9h10c4.97,0,9-4.029,9-9V9C28,4.029,23.97,0,19,0z
-								M26,23.091C26,27.459,22.545,31,18.285,31H9.714C5.454,31,2,27.459,2,23.091V9.909C2,5.541,5.454,2,9.714,2h8.571
-								C22.545,2,26,5.541,26,9.909V23.091z"/>
-								<polygon class="nav_arrow" fill="#F3F6F9" points="15.044,22.222 16.377,20.888 12.374,16.885 16.377,12.882 15.044,11.55 9.708,16.885 11.04,18.219 
-								11.042,18.219 "/>
-							</svg>
-						</div>
-						
-						<!-- CTA Slider Nav - Next -->
-						<div class="cta_slider_nav cta_slider_next">
-							<svg version="1.1" id="Layer_5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-							width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
-								<defs>
-									<linearGradient id='cta_grad_next'>
-										<stop offset='0%' stop-color='#fa9e1b'/>
-										<stop offset='100%' stop-color='#8d4fff'/>
-									</linearGradient>
-								</defs>
-							<path class="nav_path" fill="#F3F6F9" d="M19,0H9C4.029,0,0,4.029,0,9v15c0,4.971,4.029,9,9,9h10c4.97,0,9-4.029,9-9V9C28,4.029,23.97,0,19,0z
-							M26,23.091C26,27.459,22.545,31,18.285,31H9.714C5.454,31,2,27.459,2,23.091V9.909C2,5.541,5.454,2,9.714,2h8.571
-							C22.545,2,26,5.541,26,9.909V23.091z"/>
-							<polygon class="nav_arrow" fill="#F3F6F9" points="13.044,11.551 11.71,12.885 15.714,16.888 11.71,20.891 13.044,22.224 18.379,16.888 17.048,15.554 
-							17.046,15.554 "/>
-							</svg>
-						</div>
-
-					</div>
-
-				</div>
-			</div>
-		</div>		
-	</div>
-
-	<form id="formBookAn" action="valid/{{post['id_announcement']}}" method="POST">
-		<input type="hidden" name="idAnnouncement" value="{{post['id_announcement']}}"/>
-		<input type="hidden" name="idUser" value="{{post['id_user']}}"/>
-		<input type="hidden" name="startDate" value="{{app.session.get('startDate')}}"/>
-		<input type="hidden" name="endDate" value="{{app.session.get('endDate')}}"/>
-		<input type="hidden" name="price" value="{{post['totalPrice']}}"/>
-	</form>
-
-	<!-- Modal -->
-	<div class="modal fade" id="modalConfirmeBooking" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">{{post['title']}}</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div>
-					<p style="font-weight:bold;font-size:15px"><span style="color:#31124B;">Date début location: </span> <span>{{app.session.get('startDate')}}</span></p>
-					<p style="font-weight:bold;font-size:15px"><span style="color:#31124B;">Date fin location: </span> <span>{{app.session.get('endDate')}}</span></p>
-					<p style="font-weight:bold;font-size:15px"><span style="color:#31124B;">Louer par: </span> <span>{{post['name']}} <span>{{post['surname']}}</span></p>
-					<p style="font-weight:bold;font-size:15px"><span style="color:#31124B;">Prix / jour: </span> <span>{{post['price_per_day']}}€</span></p>
-					<p style="font-weight:bold;font-size:15px"><span style="color:#31124B;">Total: </span> <span>{{post['totalPrice']}}€</span></p>
-				</div>
-			</div>
-			<div style="margin-bottom:5%" class="modal-footer">
-				<button type="submit" id="form_submit_button" class="form_submit_button button" data-dismiss="modal">Annuler</button>
-				<button type="button" id="form_submit_valid" class="form_submit_button button">Valider</button>
-			</div>
-			</div>
-		</div>
-	</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<script type="text/javascript">
+    <div class="super_container">
+        <div class="offers">
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <h2 class="section_title">
+                            {{ post['title'] }}
+                        </h2>
+                    </div>
+                </div>
+                <div class="row offers_items">
+                    <!-- Offers Item -->
+                    <div class="col-lg-12 offers_col">
+                        {% if app.session.get('bookValid') is defined and app.session.get('bookValid') == 'OK' %}
+                            <div class="alert alert-success" role="alert">
+                                <b>
+                                    La voiture a bien été réservé ! Merci pour votre confiance...
+                                </b>
+                            </div>
+                        {% endif %}
+                        {% if app.session.get('bookValid') is defined and app.session.get('bookValid') == 'KO' %}
+                            {{ app.session.set('bookValid', '') }}
+                            <div class="alert alert-danger" role="alert">
+                                <b>
+                                    Erreur lors de la réservation de la voiture ! Veuillez recommencer...
+                                </b>
+                            </div>
+                        {% endif %}
+                        <div class="offers_item">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="offers_image_container">
+									{% set urlImg = "assets/images/"~ app.session.get('id') ~"_"~ post['modele'] ~"_"~ post['counter_km'] ~ ".jpg" %}
+								<div class="offers_image_background" style="background-image:url({{ asset(urlImg) }})"></div>
+                                        <div class="offer_name">
+                                            <a href="#">
+                                                {{ post['marque'] }}
+                                                {{ post['modele'] }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="offers_content">
+                                        <div class="offers_price">
+                                            {{ post['totalPrice'] }}
+                                            €
+                                            <span>
+                                                Pour 
+                                                {{ post['dateDiff'] }}
+                                                jour(s)
+                                            </span>
+                                        </div>
+                                        <div class="rating_r rating_r_4 offers_rating">
+                                            {% for i in range(1,random(3,5)) %}
+                                                <i></i>
+                                            {% endfor %}
+                                        </div>
+                                        <h3 style="margin-top:5%; color:#2D2C2C; font-size:20px;font-weight:bold">
+                                            À propos du véhicule
+                                                                                    
+                                        </h3>
+                                        <p class="offers_text">
+                                            {{ post['descCar'] }}
+                                        </p>
+                                        <div class="offers_icons">
+                                            <ul class="offers_icons_list">
+                                                <li class="offers_icons_item" style="font-weight:bold">
+                                                    <span style="font-weight:bold;color:#F59B27">
+                                                        Carburant: 
+                                                                                                            
+                                                    </span>
+                                                    {{ post['energy'] }}
+                                                </li>
+                                                <li class="offers_icons_item" style="font-weight:bold">
+                                                    <span style="font-weight:bold;color:#F59B27">
+                                                        Modéle: 
+                                                                                                            
+                                                    </span>
+                                                    {{ post['year'] }}
+                                                </li>
+                                                <li class="offers_icons_item" style="font-weight:bold">
+                                                    <span style="font-weight:bold;color:#F59B27">
+                                                        KM au compteur: 
+                                                                                                            
+                                                    </span>
+                                                    {{ post['counter_km'] }}
+                                                </li>
+                                                <li class="offers_icons_item" style="font-weight:bold">
+                                                    <span style="font-weight:bold;color:#F59B27">
+                                                        Posté par: 
+                                                                                                            
+                                                    </span>
+                                                    {{ post['surname'] ~' '~post['name'] }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <br>
+                                            {% if app.session.get('bookValid') is defined and app.session.get('bookValid') == 'OK' %}
+                                                <div class="button book_button" style="font-size: 13px;font-weight: 700;color: #fff;text-transform: uppercase;line-height: 53px;padding-left: 46px;padding-right: 46px;background: #333;pointer-events: none;">
+                                                    <a>
+                                                        Réservé par moi-même
+                                                                                                            
+                                                    </a>
+                                                </div>
+                                            {% else %}
+                                                <div class="button book_button" style="font-size: 13px;font-weight: 700;color: #fff;text-transform: uppercase;line-height: 53px;padding-left: 46px;padding-right: 46px;background: #31124b;">
+                                                    <a href="#{{ post['id_announcement'] }}_modal" data-toggle="modal" data-target="#modalConfirmeBooking">
+                                                        Je confirme
+                                                                                                                
+                                                        <span></span>
+                                                        <span></span>
+                                                        <span></span>
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cta">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <!-- CTA Slider -->
+                            <div class="cta_slider_container">
+                                <div class="owl-carousel owl-theme cta_slider">
+                                    <!-- CTA Slider Item -->
+                                    {% if comments|length > 0 %}
+                                        {% for comment in comments %}
+                                            <div class="owl-item cta_item text-center" style="background-color:#e1e1e1 ">
+                                                <div class="cta_title">
+                                                    {{ comment['name'] }}
+                                                    {{ comment['surname'] }}
+                                                </div>
+                                                <div class="rating_r rating_r_4">
+                                                    {% for st in range(1,comment['stars']) %}
+                                                        <i></i>
+                                                    {% endfor %}
+                                                </div>
+                                                <p class="cta_text">
+                                                    {{ comment['desc_comment'] }}
+                                                </p>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="owl-item cta_item text-center">
+                                            <div class="cta_title">
+                                                Pas de commentaire pour le moment...
+                                                                                            
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <!-- CTA Slider Nav - Prev -->
+                                <div class="cta_slider_nav cta_slider_prev">
+                                    <svg version="1.1" id="Layer_4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
+                                        <defs>
+                                            <linearGradient id='cta_grad_prev'>
+                                                <stop offset='0%' stop-color='#fa9e1b' />
+                                                <stop offset='100%' stop-color='#8d4fff' />
+                                            </linearGradient>
+                                        </defs>
+                                        <path class="nav_path" fill="#F3F6F9" d="M19,0H9C4.029,0,0,4.029,0,9v15c0,4.971,4.029,9,9,9h10c4.97,0,9-4.029,9-9V9C28,4.029,23.97,0,19,0z
+                                                                                        								M26,23.091C26,27.459,22.545,31,18.285,31H9.714C5.454,31,2,27.459,2,23.091V9.909C2,5.541,5.454,2,9.714,2h8.571
+                                                                                        								C22.545,2,26,5.541,26,9.909V23.091z" />
+                                        <polygon class="nav_arrow" fill="#F3F6F9" points="15.044,22.222 16.377,20.888 12.374,16.885 16.377,12.882 15.044,11.55 9.708,16.885 11.04,18.219
+                                                                                								11.042,18.219 " />
+                                    </svg>
+                                </div>
+                                <!-- CTA Slider Nav - Next -->
+                                <div class="cta_slider_nav cta_slider_next">
+                                    <svg version="1.1" id="Layer_5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
+                                        <defs>
+                                            <linearGradient id='cta_grad_next'>
+                                                <stop offset='0%' stop-color='#fa9e1b' />
+                                                <stop offset='100%' stop-color='#8d4fff' />
+                                            </linearGradient>
+                                        </defs>
+                                        <path class="nav_path" fill="#F3F6F9" d="M19,0H9C4.029,0,0,4.029,0,9v15c0,4.971,4.029,9,9,9h10c4.97,0,9-4.029,9-9V9C28,4.029,23.97,0,19,0z
+                                                                                        							M26,23.091C26,27.459,22.545,31,18.285,31H9.714C5.454,31,2,27.459,2,23.091V9.909C2,5.541,5.454,2,9.714,2h8.571
+                                                                                        							C22.545,2,26,5.541,26,9.909V23.091z" />
+                                        <polygon class="nav_arrow" fill="#F3F6F9" points="13.044,11.551 11.71,12.885 15.714,16.888 11.71,20.891 13.044,22.224 18.379,16.888 17.048,15.554
+                                                                                							17.046,15.554 " />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form id="formBookAn" action="valid/{{ post['id_announcement'] }}" method="POST">
+                <input type="hidden" name="idAnnouncement" value="{{ post['id_announcement'] }}" />
+                <input type="hidden" name="idUser" value="{{ post['id_user'] }}" />
+                <input type="hidden" name="startDate" value="{{ app.session.get('startDate') }}" />
+                <input type="hidden" name="endDate" value="{{ app.session.get('endDate') }}" />
+                <input type="hidden" name="price" value="{{ post['totalPrice'] }}" />
+            </form>
+            <!-- Modal -->
+            <div class="modal fade" id="modalConfirmeBooking" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">
+                                {{ post['title'] }}
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">
+                                    &times;
+                                                                    
+                                </span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <p style="font-weight:bold;font-size:15px">
+                                    <span style="color:#31124B;">
+                                        Date début location: 
+                                                                            
+                                    </span>
+                                    <span>
+                                        {{ app.session.get('startDate') }}
+                                    </span>
+                                </p>
+                                <p style="font-weight:bold;font-size:15px">
+                                    <span style="color:#31124B;">
+                                        Date fin location: 
+                                                                            
+                                    </span>
+                                    <span>
+                                        {{ app.session.get('endDate') }}
+                                    </span>
+                                </p>
+                                <p style="font-weight:bold;font-size:15px">
+                                    <span style="color:#31124B;">
+                                        Louer par: 
+                                                                            
+                                    </span>
+                                    <span>
+                                        {{ post['name'] }}
+                                        <span>
+                                            {{ post['surname'] }}
+                                        </span>
+                                    </p>
+                                    <p style="font-weight:bold;font-size:15px">
+                                        <span style="color:#31124B;">
+                                            Prix / jour: 
+                                                                                    
+                                        </span>
+                                        <span>
+                                            {{ post['price_per_day'] }}
+                                            €
+                                                                                    
+                                        </span>
+                                    </p>
+                                    <p style="font-weight:bold;font-size:15px">
+                                        <span style="color:#31124B;">
+                                            Total: 
+                                                                                    
+                                        </span>
+                                        <span>
+                                            {{ post['totalPrice'] }}
+                                            €
+                                                                                    
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div style="margin-bottom:5%" class="modal-footer">
+                                <button type="submit" id="form_submit_button" class="form_submit_button button" data-dismiss="modal">
+                                    Annuler
+                                                                    
+                                </button>
+                                <button type="button" id="form_submit_valid" class="form_submit_button button">
+                                    Valider
+                                                                    
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+            <script type="text/javascript">
 	$(document).ready(function(){
 		$("#formBookAn").hide();
 		$("#form_submit_valid").click(function(){
-			// Submit form...
 			$("#formBookAn").submit();
 		});
-		
 	});
 </script>
-{% endblock %}
+        {% endblock %}
+        

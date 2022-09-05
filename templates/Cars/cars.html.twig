@@ -1,190 +1,229 @@
 {% extends 'base.html.twig' %}
-{%  block title %}MY CARS{% endblock %}
+{% block title %}
+    MY CARS
+{% endblock %}
 {% block body %}
-<div class="super_container">
-	
-	<div class="testimonials">
-		{# <div class="test_border"></div> #}
-		<div class="container">
-			<div class="row">
-				<div class="col text-center">
-					<h2 class="section_title">Consulter mes véhicules ({{myCars|length}})</h2>
-					{% if app.session.get('cars-delited') is defined and app.session.get('cars-delited') == 'OK' %}
-						{{ app.session.set('cars-delited', '') }}
-						<div class="alert alert-success" role="alert">
-							<b>La voiture a bien été supprimée...</b>
-						</div>
-					{% endif %}
-					{% if app.session.get('cars-delited') is defined and app.session.get('cars-delited') == 'KO' %}
-						{{ app.session.set('cars-delited', '') }}
-						<div class="alert alert-danger" role="alert">
-							<b>Erreur lors de la suppression de la voiture ! Veuillez recommencer...</b>
-						</div>
-					{% endif %}
-					{% if inserted is defined and inserted == true %}
-						<div class="alert alert-success" role="alert">
-							Votre nouveau véhicule a bien été ajouté...
-						</div>
-					{% endif %}
-					{% if inserted is defined and inserted == false %}
-						<div class="alert alert-danger" role="alert">
-							Erreur ! un problème est survenu lors de l'ajout du véhicule ! Veuillez recommencer...
-						</div>
-					{% endif %}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-					
-					<!-- Testimonials Slider -->
-					<div class="test_slider_container">
-						<div class="owl-carousel owl-theme test_slider">
-                            {% for car in myCars %}
-							<!-- Testimonial Item -->
-							<div class="owl-item">
-								<div class="test_item">
-                                    {% set urlImg = "assets/images/"~ app.session.get('id') ~"_"~ car['modele'] ~"_"~ car['counter_km'] ~ ".jpg" %}
-									<div class="test_image"><img src="{{ asset(urlImg)}}" alt="{{car['marque']}}"></div>
-									<div class="test_icon"><a  href="#{{car['car_id']}}" id="open-modal-car" class="remove-car" ><img src="{{asset('assets/images/trash.png')}}" alt=""></a></div>
-									<div class="test_content_container">
-										<div class="test_content">
-											<div class="test_item_info">
-												<div class="test_name car-modele-marque-{{car['car_id']}}">{{car['marque']}} | {{car['modele']}}</div>
-												<div class="test_date">Année {{car['year']}} | {{car['counter_km']}} KM | {{car['energy']}}</div>
-											</div>
-											<div class="test_quote_title">Type véhicule {{car['car_type']|upper}}</div>
-											<p class="test_quote_text">Catégorie véhicule {{car['category_car']|upper}}</p>
-                                            <br><br>
-										</div>
-									</div>
-								</div>
-							</div>
-                            {% endfor %}
-						</div>
-
-						<!-- Testimonials Slider Nav - Prev -->
-						<div class="test_slider_nav test_slider_prev">
-							<svg version="1.1" id="Layer_6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-								width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
-								<defs>
-									<linearGradient id='test_grad_prev'>
-										<stop offset='0%' stop-color='#fa9e1b'/>
-										<stop offset='100%' stop-color='#8d4fff'/>
-									</linearGradient>
-								</defs>
-								<path class="nav_path" fill="#F3F6F9" d="M19,0H9C4.029,0,0,4.029,0,9v15c0,4.971,4.029,9,9,9h10c4.97,0,9-4.029,9-9V9C28,4.029,23.97,0,19,0z
-								M26,23.091C26,27.459,22.545,31,18.285,31H9.714C5.454,31,2,27.459,2,23.091V9.909C2,5.541,5.454,2,9.714,2h8.571
-								C22.545,2,26,5.541,26,9.909V23.091z"/>
-								<polygon class="nav_arrow" fill="#F3F6F9" points="15.044,22.222 16.377,20.888 12.374,16.885 16.377,12.882 15.044,11.55 9.708,16.885 11.04,18.219 
-								11.042,18.219 "/>
-							</svg>
-						</div>
-						
-						<!-- Testimonials Slider Nav - Next -->
-						<div class="test_slider_nav test_slider_next">
-							<svg version="1.1" id="Layer_7" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-							width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
-								<defs>
-									<linearGradient id='test_grad_next'>
-										<stop offset='0%' stop-color='#fa9e1b'/>
-										<stop offset='100%' stop-color='#8d4fff'/>
-									</linearGradient>
-								</defs>
-							<path class="nav_path" fill="#F3F6F9" d="M19,0H9C4.029,0,0,4.029,0,9v15c0,4.971,4.029,9,9,9h10c4.97,0,9-4.029,9-9V9C28,4.029,23.97,0,19,0z
-							M26,23.091C26,27.459,22.545,31,18.285,31H9.714C5.454,31,2,27.459,2,23.091V9.909C2,5.541,5.454,2,9.714,2h8.571
-							C22.545,2,26,5.541,26,9.909V23.091z"/>
-							<polygon class="nav_arrow" fill="#F3F6F9" points="13.044,11.551 11.71,12.885 15.714,16.888 11.71,20.891 13.044,22.224 18.379,16.888 17.048,15.554 
-							17.046,15.554 "/>
-							</svg>
-						</div>
-
-					</div>
-					
-				</div>
-			</div>
-
-		</div>
-	</div>
-	
-    <div class="contact">
-        
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="contact_form_container">
-                        
-						<button style="display:block;margin:auto" id="addCar" class="form_submit_button button">Ajouter une nouvelle voiture</button>
-						<div class="contact_title">Ajouter une nouvelle voiture</div>
-						<form id="sectionAddCarForm" action="/newCar/add/{{app.session.get('name')|lower}}" class="contact_form" method="POST" enctype="multipart/form-data">
-                            <input type="text"  name="marque" class="contact_form_name input_field" placeholder="Marque" required="required" data-error="title is required.">
-                            <input type="text" name="modele" class="contact_form_email input_field" placeholder="Modèle" required="required" data-error="km is required.">
-							<input type="number" name="year" class="contact_form_name input_field" placeholder="Année" required="required" data-error="price is required.">
-                            <input type="text" name="descCar" class="contact_form_email input_field" placeholder="Description de la voiture" required="required" data-error="km is required.">
-
-                            <select name="category" class="contact_form_name input_field" required="required">
-								<option selected disabled>Catégorie de la voiture</option>
-								{% for category in getCategoryCar %}
-									<option style="color:#333" value="{{category['id']}}">{{category['category_car']}}</option>
-								{% endfor %}
-							</select>
-
-							<select name="type_" class="contact_form_email input_field" required="required">
-								<option selected disabled>Type de la voiture</option>
-								{% for type in getCarType %}
-									<option style="color:#333" value="{{type['id']}}">{{type['car_type']}}</option>
-								{% endfor %}
-							</select>
-							<select name="energy" class="contact_form_subject input_field" required="required">
-								<option selected disabled>Carburant</option>
-								{% for energy in getCarEnergy %}
-									<option style="color:#333" value="{{energy['id']}}">{{energy['energy']}}</option>
-								{% endfor %}
-							</select>
-							<input type="number" name="doorsNumber" class="contact_form_name input_field" placeholder="Nombre de porte" required="required" data-error="price is required.">
-                            <input type="number" name="km" class="contact_form_email input_field" placeholder="KM au compteur" required="required" data-error="km is required.">
-							<input type="number" name="seatNumber" class="contact_form_subject input_field" placeholder="Places assises" required="required" data-error="km is required.">
-							<input type="file"   name="car_pic" class="contact_form_subject input_field" required="required">
-							<br>
-                            <button type="submit" id="form_submit_button" class="form_submit_button button">Valider<span></span><span></span><span></span></button>
-                        </form>
+    <div class="super_container">
+        <div class="testimonials">
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <h2 class="section_title">
+                            Mes véhicules (
+                            {{ myCars|length }}
+                            )
+                        </h2>
+                        {% if app.session.get('cars-deleted') is defined and app.session.get('cars-deleted') == 'OK' %}
+                            {{ app.session.set('cars-deleted', '') }}
+                            <div class="alert alert-success" role="alert">
+                                <b>
+                                    La voiture a bien été supprimée...
+                                </b>
+                            </div>
+                        {% endif %}
+                        {% if app.session.get('cars-deleted') is defined and app.session.get('cars-deleted') == 'KO' %}
+                            {{ app.session.set('cars-deleted', '') }}
+                            <div class="alert alert-danger" role="alert">
+                                <b>
+                                    Erreur lors de la suppression de la voiture ! Veuillez recommencer...
+                                </b>
+                            </div>
+                        {% endif %}
+                        {% if inserted is defined and inserted == true %}
+                            <div class="alert alert-success" role="alert">
+                                Votre nouveau véhicule a bien été ajouté...
+                            </div>
+                        {% endif %}
+                        {% if inserted is defined and inserted == false %}
+                            <div class="alert alert-danger" role="alert">
+                                Erreur ! un problème est survenu lors de l'ajout du véhicule ! Veuillez recommencer...
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+                <div class="row">
+                    <div class="col">
+                        <!-- Testimonials Slider -->
+                        <div class="test_slider_container">
+                            <div class="owl-carousel owl-theme test_slider">
+                                {% for car in myCars %}
+                                    <!-- Testimonial Item -->
+                                    <div class="owl-item">
+                                        <div class="test_item">
+                                            {% set urlImg = "assets/images/"~ app.session.get('id') ~"_"~ car['modele'] ~"_"~ car['counter_km'] ~ ".jpg" %}
+                                            <div class="test_image">
+                                                <img src="{{ asset(urlImg) }}" alt="{{ car['marque'] }}"></div>
+                                                <div class="test_icon">
+                                                    <a href="#{{ car['car_id'] }}" id="open-modal-car" class="remove-car">
+                                                        <img src="{{ asset('assets/images/trash.png') }}" alt=""></a>
+                                                    </div>
+                                                    <div class="test_content_container">
+                                                        <div class="test_content">
+                                                            <div class="test_item_info">
+                                                                <div class="test_name car-modele-marque-{{ car['car_id'] }}">
+                                                                    {{ car['marque'] }}
+                                                                    | 
+                                                                    {{ car['modele'] }}
+                                                                </div>
+                                                                <div class="test_date">
+                                                                    Année 
+                                                                    {{ car['year'] }}
+                                                                    | 
+                                                                    {{ car['counter_km'] }}
+                                                                    KM | 
+                                                                    {{ car['energy'] }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="test_quote_title">
+                                                                Type véhicule 
+                                                                {{ car['car_type']|upper }}
+                                                            </div>
+                                                            <p class="test_quote_text">
+                                                                Catégorie véhicule 
+                                                                {{ car['category_car']|upper }}
+                                                            </p>
+                                                            <br>
+                                                                <br></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                            <!-- Testimonials Slider Nav - Prev -->
+                                            <div class="test_slider_nav test_slider_prev">
+                                                <svg version="1.1" id="Layer_6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id='test_grad_prev'>
+                                                            <stop offset='0%' stop-color='#fa9e1b' />
+                                                            <stop offset='100%' stop-color='#8d4fff' />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path class="nav_path" fill="#F3F6F9" d="M19,0H9C4.029,0,0,4.029,0,9v15c0,4.971,4.029,9,9,9h10c4.97,0,9-4.029,9-9V9C28,4.029,23.97,0,19,0z
+                                                        								M26,23.091C26,27.459,22.545,31,18.285,31H9.714C5.454,31,2,27.459,2,23.091V9.909C2,5.541,5.454,2,9.714,2h8.571
+                                                        								C22.545,2,26,5.541,26,9.909V23.091z" />
+                                                    <polygon class="nav_arrow" fill="#F3F6F9" points="15.044,22.222 16.377,20.888 12.374,16.885 16.377,12.882 15.044,11.55 9.708,16.885 11.04,18.219
+                                                    								11.042,18.219 " />
+                                                </svg>
+                                            </div>
+                                            <!-- Testimonials Slider Nav - Next -->
+                                            <div class="test_slider_nav test_slider_next">
+                                                <svg version="1.1" id="Layer_7" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
+                                                    <defs>
+                                                        <linearGradient id='test_grad_next'>
+                                                            <stop offset='0%' stop-color='#fa9e1b' />
+                                                            <stop offset='100%' stop-color='#8d4fff' />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <path class="nav_path" fill="#F3F6F9" d="M19,0H9C4.029,0,0,4.029,0,9v15c0,4.971,4.029,9,9,9h10c4.97,0,9-4.029,9-9V9C28,4.029,23.97,0,19,0z
+                                                        							M26,23.091C26,27.459,22.545,31,18.285,31H9.714C5.454,31,2,27.459,2,23.091V9.909C2,5.541,5.454,2,9.714,2h8.571
+                                                        							C22.545,2,26,5.541,26,9.909V23.091z" />
+                                                    <polygon class="nav_arrow" fill="#F3F6F9" points="13.044,11.551 11.71,12.885 15.714,16.888 11.71,20.891 13.044,22.224 18.379,16.888 17.048,15.554
+                                                    							17.046,15.554 " />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="contact_form_container">
+                                            <button style="display:block;margin:auto" id="addCar" class="form_submit_button button">
+                                                Ajouter une nouvelle voiture
+                                            </button>
+                                            <div class="contact_title">
+                                                Ajouter une nouvelle voiture
+                                            </div>
+                                            <form id="sectionAddCarForm" action="/newCar/add/{{ app.session.get('name')|lower }}" class="contact_form" method="POST" enctype="multipart/form-data">
+                                                <input type="text" name="marque" class="contact_form_name input_field" placeholder="Marque" required="required" data-error="title is required.">
+                                                <input type="text" name="modele" class="contact_form_email input_field" placeholder="Modèle" required="required" data-error="km is required.">
+                                                <input type="number" name="year" class="contact_form_name input_field" placeholder="Année" required="required" data-error="price is required.">
+                                                <input type="text" name="descCar" class="contact_form_email input_field" placeholder="Description de la voiture" required="required" data-error="km is required.">
+                                                <select name="category" class="contact_form_name input_field" required="required">
+                                                    <option selected disabled>
+                                                        Catégorie de la voiture
+                                                    </option>
+                                                    {% for category in getCategoryCar %}
+                                                        <option style="color:#333" value="{{ category['id'] }}">
+                                                            {{ category['category_car'] }}
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                                <select name="type_" class="contact_form_email input_field" required="required">
+                                                    <option selected disabled>
+                                                        Type de la voiture
+                                                    </option>
+                                                    {% for type in getCarType %}
+                                                        <option style="color:#333" value="{{ type['id'] }}">
+                                                            {{ type['car_type'] }}
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                                <select name="energy" class="contact_form_subject input_field" required="required">
+                                                    <option selected disabled>
+                                                        Carburant
+                                                    </option>
+                                                    {% for energy in getCarEnergy %}
+                                                        <option style="color:#333" value="{{ energy['id'] }}">
+                                                            {{ energy['energy'] }}
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                                <input type="number" name="doorsNumber" class="contact_form_name input_field" placeholder="Nombre de portes" required="required" data-error="price is required.">
+                                                    <input type="number" name="km" class="contact_form_email input_field" placeholder="KM au compteur" required="required" data-error="km is required.">
+                                                    <input type="number" name="seatNumber" class="contact_form_subject input_field" placeholder="Nombre de places" required="required" data-error="km is required.">
+                                                    <input type="file" name="car_pic" class="contact_form_subject input_field" required="required">
+                                                        <br>
+                                                    <button type="submit" id="form_submit_button" class="form_submit_button button">Valider<span></span><span></span><span></span>
+                                                    </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="removeCarModal" tabindex="-1" role="dialog" aria-labelledby="removeCarTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">
+                                            &times;
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="contact_form_container">
+                                                    <div class="contact_title">
+                                                        Voulez vous supprimer cette voiture ? 
+                                                        <h2 id="car-title"></h2>
+                                                    </div>
+                                                    <form id="removeCarForm" action="/mycars/removeCar/{{ app.session.get('name')|lower }}" id="contact_form" class="contact_form" method="POST">
+                                                        <input type="hidden" name="idCar" id="idCar">
+                                                            <button type="submit" class="form_submit_button button">Valider<span></span><span></span><span></span>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-<div class="modal fade" id="removeCarModal" tabindex="-1" role="dialog" aria-labelledby="removeCarTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-		<div class="modal-body">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="contact_form_container">
-							<div class="contact_title">Voulez vous supprimer cette voiture ? <h2 id="car-title"></h2></div>
-							
-							<form id="removeCarForm" action="/mycars/removeCar/{{app.session.get('name')|lower}}" id="contact_form" class="contact_form" method="POST">
-								<input type="hidden" name="idCar" id="idCar">
-								<button type="submit" class="form_submit_button button">Valider<span></span><span></span><span></span></button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		</div>
-	</div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" 
+integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous">
+</script>
 <script type="text/javascript">
+
 	$(document).ready(function(){
 		
 		$("#sectionAddCarForm").hide();
@@ -203,11 +242,9 @@
 				$("#car-title").text(titleContent);
 				$("#idCar").val(idCarToDelete);
 				$('#removeCarModal').modal('toggle');
-
 			}, 600);
-			
 		});
-		
 	});
 </script>
 {% endblock %}
+                                                        

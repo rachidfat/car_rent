@@ -260,6 +260,11 @@
 	{
 		display: block;
 	}
+	.main_nav_item
+	{
+		display: block;		/*	rajouté */
+	}
+	
 }
 
 /************

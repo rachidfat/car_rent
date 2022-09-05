@@ -1,46 +1,53 @@
-{# ICI EXTENDS VEUT DIRE HERITE DE LA PAGE BASE.HTML.TWIG #}
-{% extends 'base.html.twig'%} 
-{% block title %}Se connecter{% endblock %}
+{% extends 'base.html.twig' %}
+{% block title %}
+    Se connecter
+{% endblock %}
 {% block body %}
     <div class="contact">
-		<div class="contact_background" style="background-image:url({{ asset("assets/images/samuele-errico-piccarini-MyjVReZ5GLQ-unsplash.jpg )")}}"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-5">
-					<div class="contact_image">
-						
-					</div>
-				</div>
-				<div class="col-lg-7">
-					<div class="contact_form_container">
-						<div class="contact_title">Se connecter à mon compte</div>
-						<br>
-						{% if new_user is defined %}
-							<div id="success-account-created" class="alert alert-success" role="alert">
-								Votre compte a bien été crée
-							</div>
-						{% endif %}
-
-						{% if connection_error is defined %}
-							<div id="danger-error-connection" class="alert alert-danger" role="alert">
-								Votre login et ou le mot de passe est inccorect <a href="#" class="alert-link">Veuillez recommencer !</a>
-							</div>
-						{% endif %}
-						{{ form(formLogin) }}
-						<button class="form_submit_button button"><a href="/register">je n'ai pas encore de compte</a></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-	<script type="text/javascript">
+        <div class="contact_background" style="background-image:url({{ asset("assets/images/samuele-errico-piccarini-MyjVReZ5GLQ-unsplash.jpg") }}"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="contact_image"></div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="contact_form_container">
+                        <div class="contact_title">
+                            Se connecter à mon compte
+                        </div>
+                        <br>
+                            {% if new_user is defined %}
+                                <div id="success-account-created" class="alert alert-success" role="alert">
+                                    Votre compte a bien été crée
+                                </div>
+                            {% endif %}
+                            {% if connection_error is defined %}
+                                <div id="danger-error-connection" class="alert alert-danger" role="alert">
+                                    Votre login et/ou le mot de passe est incorrect
+                                    <a href="#" class="alert-link">
+                                        Veuillez recommencer
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {{ form(formLogin) }}
+                                <button class="form_submit_button button">
+                                    <a href="/register">
+                                        je n'ai pas encore de compte
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+            <script type="text/javascript">
 		$(document).ready(function(){
-			// danger-error-connection
 			setTimeout(function(){	
 				$("#danger-error-connection").fadeOut();
 				$("#success-account-created").fadeOut();							
 			}, 5000);
 		});	
-	</script>
+			</script>
 {% endblock %}
+        

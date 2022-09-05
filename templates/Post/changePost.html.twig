@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Change Post
+{% endblock %}
+{% set resultSearch = 'yes' %}
+{% block body %}
+
+<br>
+    <div class="super_container">
+        <div class="contact">
+            <div class="contact_background" style="background-image:url(images/contact.png)">
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="contact_form_container">
+                            <div class="contact_title">Modifier une annonce</div>
+                            {% if app.session.get('newPostAdded') is defined and app.session.get('newPostAdded') == 'OK' %}
+                                {{ app.session.set('newPostAdded', '') }}
+                                <div class="alert alert-success" role="alert">
+                                    <b>Votre nouvelle annonce a bien été ajouté vous pouvez la consulter à tout moment !</b>
+                                </div>
+                            {% endif %}
+                            {% if app.session.get('newPostAdded') is defined and app.session.get('newPostAdded') == 'KO' %}
+                                {{ app.session.set('newPostAdded', '') }}
+                                <div class="alert alert-danger" role="alert">
+                                    <b>Erreur lors de l'ajout de l'annonce ! Veuillez recommencer...</b>
+                                </div>
+                            {% endif %}
+                        </div>
+                        </div>
+                            <form action="/newPost/add/{{app.session.get('name')|lower}}" id="contact_form" class="contact_form" method="POST">
+                                <input type="text"  name="title" class="contact_form_subject input_field" placeholder="Titre de l'annonce" required="required" data-error="title is required.">
+                                <input type="number" name="pricePerDay" class="contact_form_name input_field" placeholder="Le prix par jour" required="required" data-error="price is required.">
+                                <input type="number" name="maxKm" class="contact_form_email input_field" placeholder="Max KM" required="required" data-error="km is required.">
+                                <select name="car" class="contact_form_subject input_field" required="required" data-error="select car is required.">
+                                    <option style="color:black" selected disabled>Choissisez la voiture</option>
+                                </select>
+                                <button type="submit" id="form_submit_button" class="form_submit_button button">Valider<span></span><span></span><span></span></button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,102 +1,117 @@
 {% extends 'base.html.twig' %}
-{%  block title %}ACCOUNT SETTINGS{% endblock %}
+{% block title %}
+    ACCOUNT SETTINGS
+{% endblock %}
 {% block body %}
     <br><br><br>
-    <div class="contact_form_section">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<!-- Contact Form -->
-					<div class="contact_form_container">
-						<div class="contact_title text-center">Paramètres du compte</div>
-                        <br>
-						{% if app.session.get('pwd_changed') is defined and app.session.get('pwd_changed') == 'OK' %}
-							{{ app.session.set('pwd_changed', '') }}
-							<div class="alert alert-success" role="alert">
-								<b>L'ancien mot de passe a bien été modifié !</b>
-							</div>
-						{% endif %}
-						{% if app.session.get('pwd_changed') is defined and app.session.get('pwd_changed') == 'KO' %}
-							{{ app.session.set('pwd_changed', '') }}
-							<div class="alert alert-danger" role="alert">
-								<b>Un erreur est survenue lors de la modification ! Veuillez recommencer... <span style="font-size:9px">(Il se peut que le mot de passe ne contient pas entre 12 et 32 caractères...)</span></b>
-							</div>
-						{% endif %}
-                        <div class="contact_title text-center"><h3 style="text-align:left; font-size:12px; font-weight:bold">Dernière connexion: {{app.session.get('last_connection')}}</h3></div>
-                        {{ form(formAccountSettings) }}
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-    <br><br><br>
-
-	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="contact_form_container">
-								<div class="contact_title">Changer le mot de passe</div>
-								<div id="oldPWdNotOk" style="display:none" class="alert alert-danger" role="alert">
-									L'ancien mot de passe ne correspond pas !
-								</div>
-								<div id="newPWdNotOk" style="display:none" class="alert alert-danger" role="alert">
-									Les mots de passe doivent être identiques !
-								</div>
-								<form id="updatePwdForm" action="/updatePassword/{{app.session.get('name')|lower}}" id="contact_form" class="contact_form" method="POST">
-									<input type="hidden" id="old_pwd_hidden" value="{{app.session.get('pwd')|lower}}">
-									<input type="hidden" name="userId" value="{{app.session.get('id')|lower}}">
-									<input type="password" id="old_pwd" name="old_pwd" class="contact_form_subject input_field" placeholder="Ancien mot de passe" required="required" data-error="title is required.">
-									<input type="password" id="new_pwd" name="new_pwd" class="contact_form_subject input_field" placeholder="Nouveau mot de passe" required="required" data-error="price is required.">
-									<input type="password" id="confirme_pwd" name="confirme_pwd" class="contact_form_subject input_field" placeholder="Confirmer le nouveau mot de passe" required="required" data-error="km is required.">
-									<button type="button" id="form_submit_button" class="form_submit_button button">Valider<span></span><span></span><span></span></button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			{# <div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div> #}
-			</div>
-		</div>
-	</div>
-
-
-	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			var oldPwdHidden = $("#old_pwd_hidden").val();
-			$("#form_submit_button").on('click', function(){
-				var oldPwd = $("#old_pwd").val();
-				if(oldPwd == oldPwdHidden){
-					$("#oldPWdNotOk").css('display','none');
-					var newPwd = $("#new_pwd").val();
-					var confirmePwd = $("#confirme_pwd").val();
-					if((newPwd == confirmePwd) && (newPwd != "") && (confirmePwd != "")){
-						// Submit the form
-						$("#newPWdNotOk").css('display','none');
-						//alert('OK UPDATE PWD');
-						$("#updatePwdForm").submit();
-					}else{
-						$("#newPWdNotOk").css('display','block');
-					}
-				}else{
-					//alert("NOT THE SAME PWD");
-					$("#oldPWdNotOk").css('display','block');
-				}
-			});
-		});
-	</script>
+                <div class="contact_form_section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <!-- Contact Form -->
+                                <div class="contact_form_container">
+                                    <div class="contact_title text-center">
+                                        Paramètres du compte
+                                    </div>
+                                    <br>
+                                        {% if app.session.get('pwd_changed') is defined and app.session.get('pwd_changed') == 'OK' %}
+                                            {{ app.session.set('pwd_changed', '') }}
+                                            <div class="alert alert-success" role="alert">
+                                                <b>
+                                                    L'ancien mot de passe a bien été modifié !
+                                                </b>
+                                            </div>
+                                        {% endif %}
+                                        {% if app.session.get('pwd_changed') is defined and app.session.get('pwd_changed') == 'KO' %}
+                                            {{ app.session.set('pwd_changed', '') }}
+                                            <div class="alert alert-danger" role="alert">
+                                                <b>
+                                                    Un erreur est survenue lors de la modification ! Veuillez recommencer... 
+                                                    <span style="font-size:9px">
+                                                        (Il faut que le mot de passe contienne entre 12 et 32 caractères)
+                                                    </span>
+                                                </b>
+                                            </div>
+                                        {% endif %}
+                                        <div class="contact_title text-center">
+                                            <h3 style="text-align:left; font-size:12px; font-weight:bold">
+                                                Dernière connexion: 
+                                                {{ app.session.get('last_connection') }}
+                                            </h3>
+                                        </div>
+                                        {{ form(formAccountSettings) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br><br>
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                &times;
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="contact_form_container">
+                                                        <div class="contact_title">
+                                                            Changer le mot de passe
+                                                        </div>
+                                                        <div id="oldPWdNotOk" style="display:none" class="alert alert-danger" role="alert">
+                                                            L'ancien mot de passe ne correspond pas !
+                                                        </div>
+                                                        <div id="newPWdNotOk" style="display:none" class="alert alert-danger" role="alert">
+                                                            Les mots de passe doivent être identiques !
+                                                        </div>
+                                                        <form id="updatePwdForm" action="/updatePassword/{{ app.session.get('name')|lower }}" id="contact_form" class="contact_form" method="POST">
+                                                            <input type="hidden" id="old_pwd_hidden" value="{{ app.session.get('pwd')|lower }}">
+                                                            <input type="hidden" name="userId" value="{{ app.session.get('id')|lower }}">
+                                                            <input type="password" id="old_pwd" name="old_pwd" class="contact_form_subject input_field" placeholder="Ancien mot de passe" required="required" data-error="title is required.">
+                                                            <input type="password" id="new_pwd" name="new_pwd" class="contact_form_subject input_field" placeholder="Nouveau mot de passe" required="required" data-error="price is required.">
+                                                            <input type="password" id="confirme_pwd" name="confirme_pwd" class="contact_form_subject input_field" placeholder="Confirmer le nouveau mot de passe" required="required" data-error="km is required.">
+                                                                <button type="button" id="form_submit_button" class="form_submit_button button">
+                                                                    Valider
+                                                                    <span></span>
+                                                                    <span></span>
+                                                                    <span></span>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+                            <script type="text/javascript">
+                                $(document).ready(function(){
+                                    var oldPwdHidden = $("#old_pwd_hidden").val();
+                                    $("#form_submit_button").on('click', function(){
+                                        var oldPwd = $("#old_pwd").val();
+                                        if(oldPwd == oldPwdHidden){
+                                            $("#oldPWdNotOk").css('display','none');
+                                            var newPwd = $("#new_pwd").val();
+                                            var confirmePwd = $("#confirme_pwd").val();
+                                            if((newPwd == confirmePwd) && (newPwd != "") && (confirmePwd != "")){
+                                                $("#newPWdNotOk").css('display','none');
+                                                $("#updatePwdForm").submit();
+                                            }else{
+                                                $("#newPWdNotOk").css('display','block');
+                                            }
+                                        }else{
+                                            $("#oldPWdNotOk").css('display','block');
+                                        }
+                                    });
+                                });
+                            </script>
 {% endblock %}
+                                                    

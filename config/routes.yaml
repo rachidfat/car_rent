@@ -34,6 +34,10 @@ consultPost:
   path: /consultPost/{username}
   controller: App\Controller\PostController::consultPost
 
+changePost:
+  path: /changePost/{username}
+  controller: App\Controller\PostController::changePost
+
 my_cars:
   path: /mycars/{username}
   controller: App\Controller\CarsController::carsPage
@@ -58,13 +62,14 @@ bookValid:
   path: /book/valid/{id_announcement}
   controller: App\Controller\BookController::bookValidPage
 
-
 removeCar:
   path: /mycars/removeCar/{username}
   controller: App\Controller\CarsController::removeCar
-
 
 updatePrice:
   path: /mycars/updatePrice/{username}
   controller: App\Controller\PostController::updatePrice
 
+error:
+  path: /error404
+  controller: App\Controller\LandingController::error404Page 

@@ -8,19 +8,19 @@
     use Symfony\Component\HttpFoundation\Session\Session;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Twig\Environment; // a rajouter dans chaque controlleur
+    use Twig\Environment;
 
     class PostController extends AbstractController
     {
         /**
-         * @var Environment  // pour cela on rajoute ces lignes la afin de dire ''j'ai le droit d'implementer de nouvelles fonctions !!
+         * @var Environment
          */
         private $page;
         public function __construct(Environment $page){
 
             $this->page = $page;
 
-        }                     // a toujours avoir dans chaque controlleur
+        }
 
         public function newPost(){
             $durableSession = new Session();
@@ -30,7 +30,6 @@
                 $getUserCars = $modele->getUserCars($durableSession->get('id'));
                 return new Response($this->page->render('Post/newPost.html.twig', array('userCars'=>$getUserCars)));
             }else{
-                // une erreur de connexion...
                 echo "<h1>401 (Unauthorized) Please login !</h1>";
                 return new Response();
             }
@@ -38,7 +37,6 @@
         }
 
         public function validatedNewPost(){
-            // array(4) { ["title"]=> string(28) "Peugot 5008 location voiture" ["pricePerDay"]=> string(2) "30" ["maxKm"]=> string(4) "2500" ["car"]=> string(1) "1" }
 
             $durableSession = new Session();
 
@@ -54,7 +52,6 @@
 
                 return $this->redirect('/newPost/'.strtolower($durableSession->get('name')));             
             }else{
-                // une erreur de connexion...
                 echo "<h1>401 (Unauthorized Action) Please login !</h1>";
                 return new Response();
             }
@@ -70,11 +67,9 @@
                 $consultPost = $model->consultPost($durableSession->get('id'));
                 return new Response($this->page->render('Post/consultPost.html.twig', array('getPost'=>$consultPost)));
             }else{
-                // une erreur de connexion...
                 echo "<h1>401 (Unauthorized) Please login !</h1>";
                 return new Response();
             }
-
         }
 
         public function updatePrice($username){
@@ -88,11 +83,9 @@
                 $consultPost = $model->consultPost($durableSession->get('id'));
                 return new Response($this->page->render('Post/consultPost.html.twig', array('getPost'=>$consultPost)));
             }else{
-                // une erreur de connexion...
                 echo "<h1>401 (Unauthorized) Please login !</h1>";
                 return new Response();
             }
-
         }
-    }
 
+    }
